@@ -6,3 +6,7 @@ Dependencies:
 
 Future dependencies:
 * pylibssh2
+
+Development Tools:
+* Eclipse & PyDev
+* qt4-designer (for GUI views)
