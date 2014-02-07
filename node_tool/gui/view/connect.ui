@@ -22,7 +22,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="2" column="0">
-     <widget class="QPushButton" name="connect">
+     <widget class="QPushButton" name="connect_pushbutton">
       <property name="text">
        <string>Connect</string>
       </property>
