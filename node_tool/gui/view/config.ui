@@ -185,18 +185,18 @@
         <item row="1" column="0">
          <widget class="QPushButton" name="download_routeros_push_button">
           <property name="text">
-           <string>Download RouterOS</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QPushButton" name="updateRouterOSPushButton">
-          <property name="text">
-           <string>Update RouterOS</string>
+           <string>1. Download RouterOS</string>
           </property>
          </widget>
         </item>
         <item row="5" column="0">
+         <widget class="QPushButton" name="updateRouterOSPushButton">
+          <property name="text">
+           <string>2. Upload Files for Update</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
          <widget class="QProgressBar" name="send_progress_bar">
           <property name="value">
            <number>0</number>
@@ -216,12 +216,64 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
+        <item row="7" column="0">
          <widget class="QPushButton" name="configureRouterPushButton">
           <property name="text">
-           <string>Configure Router</string>
+           <string>4. Send Configuration to Router</string>
           </property>
          </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QPushButton" name="resetRouterPushButton">
+          <property name="text">
+           <string>3. Reset Router</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <layout class="QFormLayout" name="formLayout">
+          <item row="4" column="0">
+           <widget class="QLabel" name="ip_address_label">
+            <property name="text">
+             <string>IP Address</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="user_label">
+            <property name="text">
+             <string>Username</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="password_label">
+            <property name="text">
+             <string>Password</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="ipAddressLineEdit"/>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="usernameLineEdit"/>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="passwordLineEdit">
+            <property name="echoMode">
+             <enum>QLineEdit::PasswordEchoOnEdit</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Router Connection Details:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>

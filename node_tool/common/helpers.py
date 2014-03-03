@@ -47,5 +47,21 @@ def firmware_download():
         print("Error downloading SSH keys.")
         return False
     return True
-        
+def upload_firmware(server, username, password):
+    from ftplib import FTP
+    ftp = FTP(server)
+    try:
+        ftp.login(username, password)
+    except:
+        print("Error logging in to FTP")
+        return False
+    for filename in os.listdir("firmware"):
+        try:
+            ftp.storbinary("STOR " + filename, open("firmware/" + filename, "rb"))
+        except:
+            print("Error uploading file " + filename)
+            return False
+    ftp.close()
+    return True
+    
 

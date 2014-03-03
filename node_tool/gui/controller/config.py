@@ -13,11 +13,12 @@ class Window:
         generate_configuration_push_button = self.MainWindow.findChild(QtGui.QPushButton, "generate_configuration_push_button")
         download_routeros_push_button = self.MainWindow.findChild(QtGui.QPushButton, "download_routeros_push_button")
         send_to_router_push_button = self.MainWindow.findChild(QtGui.QPushButton, "send_to_router_push_button")
+        updateRouterOSPushButton = self.MainWindow.findChild(QtGui.QPushButton, "updateRouterOSPushButton")
         
         generate_configuration_push_button.clicked.connect(self.generate_configuration_push_button_pressed)
         download_routeros_push_button.clicked.connect(self.download_routeros_push_button_pressed)
         send_to_router_push_button.clicked.connect(self.send_to_router_push_button_pressed)
-        
+        updateRouterOSPushButton.clicked.connect(self.updateRouterOSPushButtonPressed)
         self.MainWindow.show()
         return
     def generate_configuration_push_button_pressed(self):
@@ -38,35 +39,63 @@ class Window:
         self.status_bar.showMessage("Configuration generated; review and revise, then save or send to router.")
         return
     def download_routeros_push_button_pressed(self):
-        self.status_bar.showMessage("Downloading RouterOS from MikroTik's website.")
+        self.status_bar.showMessage("Downloading RouterOS from MikroTik's website...")
         send_progress_bar = self.MainWindow.findChild(QtGui.QProgressBar, "send_progress_bar")
         send_progress_bar.setMinimum(0)
         send_progress_bar.setMaximum(0)
-        self.worker = Worker()
+        self.worker = DownloadWorker()
         self.worker.finished.connect(self.finishedDownloading)
         self.worker.start()
+        return
+    def send_to_router_push_button_pressed(self):
+        self.tabs.setTabEnabled(2, True)
+        self.tabs.setCurrentIndex(2)
+        self.status_bar.showMessage("Preparing to send configuration to router.")
         return
     def finishedDownloading(self):
         send_progress_bar = self.MainWindow.findChild(QtGui.QProgressBar, "send_progress_bar")
         send_progress_bar.setMaximum(100)
         if self.worker.status:
-            send_progress_bar.setValue(33)
+            send_progress_bar.setValue(25)
             self.status_bar.showMessage("Done downloading RouterOS; now press update RouterOS.")
         else:
             send_progress_bar.setValue(0)
             self.status_bar.showMessage("Error downloading RouterOS! Manually add firmware to firmware directory, then press update RouterOS.")
-            
-    def send_to_router_push_button_pressed(self):
-        self.tabs.setTabEnabled(2, True)
-        self.tabs.setCurrentIndex(2)
-        self.status_bar.showMessage("Preparing Qto send configuration to router.")
+    def updateRouterOSPushButtonPressed(self):
+        self.status_bar.showMessage("Uploading files to update...")
+        ipAddressLineEdit = self.MainWindow.findChild(QtGui.QLineEdit, "ipAddressLineEdit")
+        usernameLineEdit = self.MainWindow.findChild(QtGui.QLineEdit, "usernameLineEdit")
+        passwordLineEdit = self.MainWindow.findChild(QtGui.QLineEdit, "passwordLineEdit")
+        send_progress_bar = self.MainWindow.findChild(QtGui.QProgressBar, "send_progress_bar")
+        send_progress_bar.setMinimum(0)
+        send_progress_bar.setMaximum(0)
+        self.worker = UploadWorker(ipAddressLineEdit.text(), usernameLineEdit.text(), passwordLineEdit.text())
+        self.worker.finished.connect(self.finishedUploading)
+        self.worker.start()
         return
+    def finishedUploading(self):
+        send_progress_bar = self.MainWindow.findChild(QtGui.QProgressBar, "send_progress_bar")
+        send_progress_bar.setMaximum(100)
+        if self.worker.status:
+            send_progress_bar.setValue(50)
+            self.status_bar.showMessage("Done uploading updates! Once the router is reset, the updates will take effect.")
+        else:
+            send_progress_bar.setValue(0)
+            self.status_bar.showMessage("Error updating RouterOS! Maybe the router connection details are wrong?")
 
-
-#Inherit from QThread
-class Worker(QtCore.QThread):
+class DownloadWorker(QtCore.QThread):
     def __init__(self):
         QtCore.QThread.__init__(self)
         
     def run(self):
         self.status = helpers.firmware_download()
+
+class UploadWorker(QtCore.QThread):
+    def __init__(self, address, username, password):
+        self.address = address
+        self.username = username
+        self.password = password
+        QtCore.QThread.__init__(self)
+        
+    def run(self):
+        self.status = helpers.upload_firmware(self.address, self.username, self.password)
