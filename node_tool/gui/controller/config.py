@@ -10,15 +10,19 @@ class Window:
         self.tabs = self.MainWindow.findChild(QtGui.QTabWidget, "tabWidget")
         self.status_bar = self.MainWindow.findChild(QtGui.QStatusBar, "statusbar")
         self.status_bar.showMessage("Waiting to generate configuration.")
+        
         generate_configuration_push_button = self.MainWindow.findChild(QtGui.QPushButton, "generate_configuration_push_button")
         download_routeros_push_button = self.MainWindow.findChild(QtGui.QPushButton, "download_routeros_push_button")
         send_to_router_push_button = self.MainWindow.findChild(QtGui.QPushButton, "send_to_router_push_button")
         updateRouterOSPushButton = self.MainWindow.findChild(QtGui.QPushButton, "updateRouterOSPushButton")
+        saveToFilePushButton = self.MainWindow.findChild(QtGui.QPushButton, "saveToFilePushButton")
         
+        saveToFilePushButton.clicked.connect(self.saveToFilePushButtonPressed)
         generate_configuration_push_button.clicked.connect(self.generate_configuration_push_button_pressed)
         download_routeros_push_button.clicked.connect(self.download_routeros_push_button_pressed)
         send_to_router_push_button.clicked.connect(self.send_to_router_push_button_pressed)
         updateRouterOSPushButton.clicked.connect(self.updateRouterOSPushButtonPressed)
+        
         self.MainWindow.show()
         return
     def generate_configuration_push_button_pressed(self):
@@ -34,7 +38,6 @@ class Window:
                                        shared_administration_check_box.isChecked(), dhcp_client_on_lan_check_box.isChecked(), route_cache_bug_fix_check_box.isChecked())
         
         review_config_plain_text_edit.setPlainText(str(configuration))
-        self.tabs.setTabEnabled(1, True)
         self.tabs.setCurrentIndex(1)
         self.status_bar.showMessage("Configuration generated; review and revise, then save or send to router.")
         return
@@ -48,9 +51,14 @@ class Window:
         self.worker.start()
         return
     def send_to_router_push_button_pressed(self):
-        self.tabs.setTabEnabled(2, True)
         self.tabs.setCurrentIndex(2)
         self.status_bar.showMessage("Preparing to send configuration to router.")
+        return
+    def saveToFilePushButtonPressed(self):
+        review_config_plain_text_edit = self.MainWindow.findChild(QtGui.QPlainTextEdit, "review_config_plain_text_edit")
+        fileName, selectedFilter = QtGui.QFileDialog.getSaveFileName()
+        saveFile = open(fileName, 'w')
+        saveFile.write(review_config_plain_text_edit.toPlainText())
         return
     def finishedDownloading(self):
         send_progress_bar = self.MainWindow.findChild(QtGui.QProgressBar, "send_progress_bar")

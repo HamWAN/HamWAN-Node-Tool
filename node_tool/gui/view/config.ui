@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>643</height>
+    <height>473</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,9 +30,35 @@
        <attribute name="title">
         <string>Generate Config</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>The HamWAN Node Tool is used to help end users configure their router. The process is split into distinct sections as indicated by the tab above. First, we need to generate the configuration. Fill out the fields below and one will be generated for you (you will get to review it before sending it to the router).</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
          <layout class="QFormLayout" name="formLayout_2">
+          <property name="fieldGrowthPolicy">
+           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+          </property>
           <item row="0" column="0">
            <widget class="QLabel" name="label_7">
             <property name="toolTip">
@@ -46,19 +72,6 @@
           <item row="0" column="1">
            <widget class="QLineEdit" name="operators_callsign_line_edit"/>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_8">
-            <property name="toolTip">
-             <string>Check the website for up-to-date information!</string>
-            </property>
-            <property name="text">
-             <string>Site Connecting To</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="site_connecting_to_line_edit"/>
-          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_9">
             <property name="toolTip">
@@ -71,6 +84,19 @@
           </item>
           <item row="1" column="1">
            <widget class="QLineEdit" name="operators_location_line_edit"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="toolTip">
+             <string>Check the website for up-to-date information!</string>
+            </property>
+            <property name="text">
+             <string>Site Connecting To</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="site_connecting_to_line_edit"/>
           </item>
           <item row="3" column="0">
            <widget class="QLabel" name="label_10">
@@ -134,7 +160,7 @@
           </item>
          </layout>
         </item>
-        <item row="1" column="0">
+        <item>
          <widget class="QPushButton" name="generate_configuration_push_button">
           <property name="text">
            <string>Generate Configuration</string>
@@ -145,13 +171,16 @@
       </widget>
       <widget class="QWidget" name="reviewConfigTab">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <attribute name="title">
         <string>Review Config</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="1" column="0">
+         <widget class="QPlainTextEdit" name="review_config_plain_text_edit"/>
+        </item>
+        <item row="2" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QPushButton" name="saveToFilePushButton">
@@ -170,40 +199,57 @@
          </layout>
         </item>
         <item row="0" column="0">
-         <widget class="QPlainTextEdit" name="review_config_plain_text_edit"/>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>The configuration below is what will be sent to the router. Feel free to update it or change any values!</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="sendToRouterTab">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <attribute name="title">
         <string>Send to Router</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="1" column="0">
+        <item row="2" column="0">
          <widget class="QPushButton" name="download_routeros_push_button">
           <property name="text">
            <string>1. Download RouterOS</string>
           </property>
          </widget>
         </item>
-        <item row="5" column="0">
+        <item row="6" column="0">
          <widget class="QPushButton" name="updateRouterOSPushButton">
           <property name="text">
            <string>2. Upload Files for Update</string>
           </property>
          </widget>
         </item>
-        <item row="8" column="0">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>For this step, we will download and update the RouterOS firmware, then reset the router to stock configuration, then start sending the configuration from the &quot;Review Config&quot; page to the router.</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0">
          <widget class="QProgressBar" name="send_progress_bar">
           <property name="value">
            <number>0</number>
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item row="3" column="0">
          <widget class="QLabel" name="label">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -216,21 +262,21 @@
           </property>
          </widget>
         </item>
-        <item row="7" column="0">
+        <item row="8" column="0">
          <widget class="QPushButton" name="configureRouterPushButton">
           <property name="text">
            <string>4. Send Configuration to Router</string>
           </property>
          </widget>
         </item>
-        <item row="6" column="0">
+        <item row="7" column="0">
          <widget class="QPushButton" name="resetRouterPushButton">
           <property name="text">
            <string>3. Reset Router</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
+        <item row="5" column="0">
          <layout class="QFormLayout" name="formLayout">
           <item row="4" column="0">
            <widget class="QLabel" name="ip_address_label">
@@ -254,10 +300,18 @@
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QLineEdit" name="ipAddressLineEdit"/>
+           <widget class="QLineEdit" name="ipAddressLineEdit">
+            <property name="text">
+             <string>192.168.88.1</string>
+            </property>
+           </widget>
           </item>
           <item row="5" column="1">
-           <widget class="QLineEdit" name="usernameLineEdit"/>
+           <widget class="QLineEdit" name="usernameLineEdit">
+            <property name="text">
+             <string>admin</string>
+            </property>
+           </widget>
           </item>
           <item row="6" column="1">
            <widget class="QLineEdit" name="passwordLineEdit">
@@ -269,17 +323,30 @@
           <item row="3" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Router Connection Details:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Router Connection Details&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
          </layout>
         </item>
+        <item row="1" column="0">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="verifyConnectionTab">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <attribute name="title">
         <string>Verify Connection</string>
@@ -330,7 +397,6 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
-  <tabstop>operators_callsign_line_edit</tabstop>
   <tabstop>operators_location_line_edit</tabstop>
   <tabstop>site_connecting_to_line_edit</tabstop>
   <tabstop>shared_administration_check_box</tabstop>
