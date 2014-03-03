@@ -1,8 +1,9 @@
 HamWAN-Node-Tool
 ================
 Dependencies:
-* python3
-* python3-pyside
+* python
+* python-pyside
+* python-jinja2
 
 Future dependencies:
 * pylibssh2

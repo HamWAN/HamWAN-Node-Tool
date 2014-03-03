@@ -47,4 +47,4 @@ class firmware(object):
         '''
         Constructor
         '''
-        
+

@@ -1,0 +1,34 @@
+/system identity set name={{ callsign }}-{{ cellsite }}
+{% if remote_admin %}
+/user ssh-keys import public-key-file=key-dsa-eo.txt user=eo
+/user ssh-keys import public-key-file=key-dsa-NQ1E.txt user=NQ1E
+/user ssh-keys import public-key-file=key-dsa-nigel.txt user=nigel
+/user ssh-keys import public-key-file=key-dsa-osburn.txt user=osburn
+/user ssh-keys import public-key-file=key-dsa-monitoring.txt user=monitoring
+{% endif %}
+/system logging action set 3 bsd-syslog=no name=remote remote=44.24.255.4 remote-port=514 src-address=0.0.0.0 syslog-facility=daemon syslog-severity=auto target=remote
+/system logging add action=remote disabled=no prefix="" topics=!debug,!snmp
+/snmp set enabled=yes contact="#HamWAN on irc.freenode.org"
+/snmp community set name=hamwan addresses=44.24.255.0/25 read-access=yes write-access=no numbers=0
+/ip firewall filter remove [find]
+/ip firewall mangle add action=change-mss chain=output new-mss=1378 protocol=tcp tcp-flags=syn tcp-mss=!0-1378
+/ip firewall mangle add action=change-mss chain=forward new-mss=1378 protocol=tcp tcp-flags=syn tcp-mss=!0-1378
+/ip dhcp-server remove [find]
+/ip dhcp-server network remove [find]
+/ip address remove [find]
+/ip dns set allow-remote-requests=no
+/interface wireless channels add band=5ghz-onlyn comment="Cell sites radiate this at 0 degrees (north)" frequency=5920 list=HamWAN name=Sector1 width=5
+/interface wireless channels add band=5ghz-onlyn comment="Cell sites radiate this at 120 degrees (south-east)" frequency=5905 list=HamWAN name=Sector2 width=5
+/interface wireless channels add band=5ghz-onlyn comment="Cell sites radiate this at 240 degrees (south-west)" frequency=5890 list=HamWAN name=Sector3 width=5
+/interface wireless set 0 radio-name="{{ callsign }}/{{ location }}-{{ cellsite }}"
+/interface wireless set 0 disabled=no frequency-mode=superchannel scan-list=HamWAN ssid=HamWAN wireless-protocol=nv2
+/ip dhcp-client add add-default-route=yes dhcp-options=hostname,clientid disabled=no interface=wlan1
+{% if remote_admin %}
+/ip dhcp-client add add-default-route=no use-peer-dns=no dhcp-options=hostname,clientid disabled=no interface=ether1
+{% endif %}
+{% if cache_bug_fix %}
+{% raw %}
+/system script add name=route-cache-fix policy=ftp,reboot,read,write,policy,test,winbox,password,sniff,sensitive,api source=":local percentused ((100 * [/ip route cache get cache-size]) / [/ip route cache get max-cache-size])\n:log info \"RouteCacheUsed: \$percentused %\";\n:if (\$percentused > 70) do={ log info \"Route Cache Above Threshold. Rebooting.\"; /system reboot; };"
+/system scheduler add interval=1d name=route-cache-fix on-event=route-cache-fix policy=ftp,reboot,read,write,policy,test,winbox,password,sniff,sensitive,api start-time=startup
+{% endraw %}
+{% endif %}

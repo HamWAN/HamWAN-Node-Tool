@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>643</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>HamWAN Node Tool - Config</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <property name="tabsClosable">
+       <bool>false</bool>
+      </property>
+      <widget class="QWidget" name="generateConfigTab">
+       <attribute name="title">
+        <string>Generate Config</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="toolTip">
+             <string>This will be the station operator's callsign.</string>
+            </property>
+            <property name="text">
+             <string>Operator's Callsign</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="operators_callsign_line_edit"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="toolTip">
+             <string>Check the website for up-to-date information!</string>
+            </property>
+            <property name="text">
+             <string>Site Connecting To</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="site_connecting_to_line_edit"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="toolTip">
+             <string>Something like neighborhood, region, or a nearby landmark is fine.</string>
+            </property>
+            <property name="text">
+             <string>Operator's Location</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="operators_location_line_edit"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="toolTip">
+             <string>This lets network admins help you remotely.</string>
+            </property>
+            <property name="text">
+             <string extracomment="Test">Shared Administration</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QCheckBox" name="shared_administration_check_box">
+            <property name="text">
+             <string>Enabled</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_11">
+            <property name="toolTip">
+             <string>This uses a workaround to resolve a bug that could impact you.</string>
+            </property>
+            <property name="text">
+             <string>Route Cache Bug Fix</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QCheckBox" name="route_cache_bug_fix_check_box">
+            <property name="text">
+             <string>Enabled</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="toolTip">
+             <string>In most cases, you want to leave this enabled.</string>
+            </property>
+            <property name="text">
+             <string>DHCP Client on LAN</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QCheckBox" name="dhcp_client_on_lan_check_box">
+            <property name="text">
+             <string>Enabled</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="generate_configuration_push_button">
+          <property name="text">
+           <string>Generate Configuration</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="reviewConfigTab">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <attribute name="title">
+        <string>Review Config</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="1" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QPushButton" name="saveToFilePushButton">
+            <property name="text">
+             <string>Save to File</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="sendToRouterPushButton">
+            <property name="text">
+             <string>Send to Router</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="0">
+         <widget class="QPlainTextEdit" name="review_config_plain_text_edit"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="sendToRouterTab">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <attribute name="title">
+        <string>Send to Router</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="1" column="0">
+         <widget class="QPushButton" name="downloadRouterOSPushButton">
+          <property name="text">
+           <string>Download RouterOS</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QPushButton" name="updateRouterOSPushButton">
+          <property name="text">
+           <string>Update RouterOS</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QProgressBar" name="progressBar">
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;By downloading RouterOS, you agree to MikroTik's &lt;/span&gt;&lt;a href=&quot;http://www.mikrotik.com/downloadterms.html&quot;&gt;&lt;span style=&quot; font-style:italic; text-decoration: underline; color:#0000ff;&quot;&gt;terms and conditions&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QPushButton" name="configureRouterPushButton">
+          <property name="text">
+           <string>Configure Router</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="verifyConnectionTab">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <attribute name="title">
+        <string>Verify Connection</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="5" column="0" colspan="2">
+         <widget class="QTextBrowser" name="wirelessMonitorTextBrowser"/>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="QPushButton" name="wirelessScanPushButton">
+          <property name="text">
+           <string>Wireless Scan</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QPushButton" name="wirelessMonitorPushButton">
+          <property name="text">
+           <string>Wireless Monitor</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QTextBrowser" name="wirelessScanTextBrowser"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="helpTab">
+       <attribute name="title">
+        <string>Help</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>operators_callsign_line_edit</tabstop>
+  <tabstop>operators_location_line_edit</tabstop>
+  <tabstop>site_connecting_to_line_edit</tabstop>
+  <tabstop>shared_administration_check_box</tabstop>
+  <tabstop>route_cache_bug_fix_check_box</tabstop>
+  <tabstop>dhcp_client_on_lan_check_box</tabstop>
+  <tabstop>generate_configuration_push_button</tabstop>
+  <tabstop>saveToFilePushButton</tabstop>
+  <tabstop>sendToRouterPushButton</tabstop>
+  <tabstop>downloadRouterOSPushButton</tabstop>
+  <tabstop>updateRouterOSPushButton</tabstop>
+  <tabstop>configureRouterPushButton</tabstop>
+  <tabstop>wirelessScanPushButton</tabstop>
+  <tabstop>wirelessMonitorPushButton</tabstop>
+  <tabstop>review_config_plain_text_edit</tabstop>
+  <tabstop>wirelessScanTextBrowser</tabstop>
+  <tabstop>wirelessMonitorTextBrowser</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

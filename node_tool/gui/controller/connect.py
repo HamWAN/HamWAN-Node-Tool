@@ -1,4 +1,5 @@
 from . import helper;
+from ...models import Configuration
 from PySide import QtGui
 
 
@@ -15,5 +16,5 @@ class Window:
         self.MainWindow.show()
         return
     def connection_pressed(self):
-        print("Yo")
+        from ...common import ssh
         return
