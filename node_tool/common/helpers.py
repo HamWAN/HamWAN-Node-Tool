@@ -7,6 +7,10 @@ Created on Feb 6, 2014
 import os
 import zipfile
 import urllib
+import paramiko
+import socket
+
+ssh = paramiko.SSHClient()
 
 def firmware_download():
     if not os.path.exists("firmware"):
@@ -63,5 +67,26 @@ def upload_firmware(server, username, password):
             return False
     ftp.close()
     return True
-    
-
+def sshConnect(server, username, password):
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    try:
+        ssh.connect(server, username=username, password=password)
+    except paramiko.AuthenticationException:
+        print ("Bad auth")
+        return False
+    except socket.error:
+        print("Socket error")
+        return False
+    return True
+def sshDisconnect():
+    ssh.close()
+    return
+def rebootRouter():
+    stdin, stdout, stderr = ssh.exec_command("/system reboot")
+    stdin.write('y\n')
+    stdin.flush()
+    return True
+def sendCommands(commands):
+    for line in commands.splitlines():
+        ssh.exec_command(line)
+    return True

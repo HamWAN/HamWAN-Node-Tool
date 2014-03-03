@@ -17,6 +17,7 @@ class Window:
         self.operators_callsign_line_edit = self.MainWindow.findChild(QtGui.QLineEdit, "operators_callsign_line_edit")
         self.operators_location_line_edit = self.MainWindow.findChild(QtGui.QLineEdit, "operators_location_line_edit")
         self.site_connecting_to_line_edit = self.MainWindow.findChild(QtGui.QLineEdit, "site_connecting_to_line_edit")
+        self.newAdminPasswordLineEdit = self.MainWindow.findChild(QtGui.QLineEdit, "newAdminPasswordLineEdit")
         self.shared_administration_check_box = self.MainWindow.findChild(QtGui.QCheckBox, "shared_administration_check_box")
         self.route_cache_bug_fix_check_box = self.MainWindow.findChild(QtGui.QCheckBox, "route_cache_bug_fix_check_box")
         self.dhcp_client_on_lan_check_box = self.MainWindow.findChild(QtGui.QCheckBox, "dhcp_client_on_lan_check_box")
@@ -39,16 +40,21 @@ class Window:
         self.usernameLineEdit = self.MainWindow.findChild(QtGui.QLineEdit, "usernameLineEdit")
         self.passwordLineEdit = self.MainWindow.findChild(QtGui.QLineEdit, "passwordLineEdit")
         self.send_progress_bar = self.MainWindow.findChild(QtGui.QProgressBar, "send_progress_bar")
+        self.rebootRouterPushButton = self.MainWindow.findChild(QtGui.QPushButton, "rebootRouterPushButton")
+        self.configureRouterPushButton = self.MainWindow.findChild(QtGui.QPushButton, "configureRouterPushButton")
         
+        self.configureRouterPushButton.clicked.connect(self.configureRouterPushButtonPressed)
         self.download_routeros_push_button.clicked.connect(self.download_routeros_push_button_pressed)
         self.updateRouterOSPushButton.clicked.connect(self.updateRouterOSPushButtonPressed)
+        self.rebootRouterPushButton.clicked.connect(self.rebootRouterPushButtonPressed)
         
         #Verify Connection page
         self.MainWindow.show()
         return
     def generate_configuration_push_button_pressed(self):       
         configuration = Configuration(self.operators_callsign_line_edit.text(), self.site_connecting_to_line_edit.text(), self.operators_location_line_edit.text(),
-                                       self.shared_administration_check_box.isChecked(), self.dhcp_client_on_lan_check_box.isChecked(), self.route_cache_bug_fix_check_box.isChecked())
+                                       self.newAdminPasswordLineEdit.text(), self.shared_administration_check_box.isChecked(), 
+                                       self.dhcp_client_on_lan_check_box.isChecked(), self.route_cache_bug_fix_check_box.isChecked())
         
         self.review_config_plain_text_edit.setPlainText(str(configuration))
         self.tabs.setCurrentIndex(1)
@@ -88,6 +94,14 @@ class Window:
         self.worker.finished.connect(self.finishedUploading)
         self.worker.start()
         return
+    def rebootRouterPushButtonPressed(self):
+        self.status_bar.showMessage("Requesting that the router reboot...")
+        self.send_progress_bar.setMinimum(0)
+        self.send_progress_bar.setMaximum(0)
+        self.worker = RebootWorker(self.ipAddressLineEdit.text(), self.usernameLineEdit.text(), self.passwordLineEdit.text())
+        self.worker.finished.connect(self.finishedRebooting)
+        self.worker.start()
+        return
     def finishedUploading(self):
         self.send_progress_bar.setMaximum(100)
         if self.worker.status:
@@ -96,6 +110,38 @@ class Window:
         else:
             self.send_progress_bar.setValue(0)
             self.status_bar.showMessage("Error updating RouterOS! Maybe the router connection details are wrong?")
+    def finishedRebooting(self):
+        self.send_progress_bar.setMaximum(100)
+        if self.worker.status:
+            self.send_progress_bar.setValue(75)
+            self.status_bar.showMessage("Reboot command successfully sent! Wait about 30 seconds for the double-beep and the green light.")
+        else:
+            self.send_progress_bar.setValue(0)
+            self.status_bar.showMessage("Error telling router to reboot! Maybe the router connection details are wrong?")
+        return
+    def configureRouterPushButtonPressed(self):
+        if self.review_config_plain_text_edit.toPlainText():
+            self.status_bar.showMessage("Sending configuration to the router...")
+            self.send_progress_bar.setMinimum(0)
+            self.send_progress_bar.setMaximum(0)
+            self.worker = ConfigureWorker(self.ipAddressLineEdit.text(), self.usernameLineEdit.text(), self.passwordLineEdit.text(), self.review_config_plain_text_edit.toPlainText())
+            self.worker.finished.connect(self.finishedConfiguring)
+            self.worker.start()
+        else:
+            errorDialog = QtGui.QMessageBox()
+            errorDialog.setIcon(QtGui.QMessageBox.Icon.Warning)
+            errorDialog.setText('To send a configuration, you must have a configuration! Use the "Generate Config" tab first.')
+            errorDialog.exec_()
+        return
+    def finishedConfiguring(self):
+        self.send_progress_bar.setMaximum(100)
+        if self.worker.status:
+            self.send_progress_bar.setValue(100)
+            self.status_bar.showMessage("Configuration complete!")
+        else:
+            self.send_progress_bar.setValue(0)
+            self.status_bar.showMessage("Error configuring the router! Maybe the router connection details are wrong?")
+        return
 
 class DownloadWorker(QtCore.QThread):
     def __init__(self):
@@ -113,3 +159,24 @@ class UploadWorker(QtCore.QThread):
         
     def run(self):
         self.status = helpers.upload_firmware(self.address, self.username, self.password)
+        
+class RebootWorker(QtCore.QThread):
+    def __init__(self, address, username, password):
+        self.address = address
+        self.username = username
+        self.password = password
+        QtCore.QThread.__init__(self)
+        
+    def run(self):            
+        self.status = helpers.sshConnect(self.address, self.username, self.password) and helpers.rebootRouter()        
+        
+class ConfigureWorker(QtCore.QThread):
+    def __init__(self, address, username, password, commands):
+        self.address = address
+        self.username = username
+        self.password = password
+        self.commands = commands
+        QtCore.QThread.__init__(self)
+        
+    def run(self):            
+        self.status = helpers.sshConnect(self.address, self.username, self.password) and helpers.sendCommands(self.commands)

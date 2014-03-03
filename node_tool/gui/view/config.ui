@@ -21,7 +21,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="tabsClosable">
        <bool>false</bool>
@@ -98,7 +98,7 @@
           <item row="2" column="1">
            <widget class="QLineEdit" name="site_connecting_to_line_edit"/>
           </item>
-          <item row="3" column="0">
+          <item row="4" column="0">
            <widget class="QLabel" name="label_10">
             <property name="toolTip">
              <string>This lets network admins help you remotely.</string>
@@ -108,7 +108,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="4" column="1">
            <widget class="QCheckBox" name="shared_administration_check_box">
             <property name="text">
              <string>Enabled</string>
@@ -118,7 +118,7 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="5" column="0">
            <widget class="QLabel" name="label_11">
             <property name="toolTip">
              <string>This uses a workaround to resolve a bug that could impact you.</string>
@@ -128,7 +128,7 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="5" column="1">
            <widget class="QCheckBox" name="route_cache_bug_fix_check_box">
             <property name="text">
              <string>Enabled</string>
@@ -138,7 +138,7 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
+          <item row="6" column="0">
            <widget class="QLabel" name="label_12">
             <property name="toolTip">
              <string>In most cases, you want to leave this enabled.</string>
@@ -148,7 +148,7 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
+          <item row="6" column="1">
            <widget class="QCheckBox" name="dhcp_client_on_lan_check_box">
             <property name="text">
              <string>Enabled</string>
@@ -157,6 +157,16 @@
              <bool>true</bool>
             </property>
            </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>New Admin Password</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="newAdminPasswordLineEdit"/>
           </item>
          </layout>
         </item>
@@ -270,9 +280,9 @@
          </widget>
         </item>
         <item row="7" column="0">
-         <widget class="QPushButton" name="resetRouterPushButton">
+         <widget class="QPushButton" name="rebootRouterPushButton">
           <property name="text">
-           <string>3. Reset Router</string>
+           <string>3. Reboot Router</string>
           </property>
          </widget>
         </item>
