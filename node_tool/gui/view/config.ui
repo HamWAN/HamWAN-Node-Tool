@@ -21,7 +21,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <property name="tabsClosable">
        <bool>false</bool>
@@ -161,7 +161,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="sendToRouterPushButton">
+           <widget class="QPushButton" name="send_to_router_push_button">
             <property name="text">
              <string>Send to Router</string>
             </property>
@@ -183,7 +183,7 @@
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="1" column="0">
-         <widget class="QPushButton" name="downloadRouterOSPushButton">
+         <widget class="QPushButton" name="download_routeros_push_button">
           <property name="text">
            <string>Download RouterOS</string>
           </property>
@@ -197,7 +197,7 @@
          </widget>
         </item>
         <item row="5" column="0">
-         <widget class="QProgressBar" name="progressBar">
+         <widget class="QProgressBar" name="send_progress_bar">
           <property name="value">
            <number>0</number>
           </property>
@@ -286,8 +286,8 @@
   <tabstop>dhcp_client_on_lan_check_box</tabstop>
   <tabstop>generate_configuration_push_button</tabstop>
   <tabstop>saveToFilePushButton</tabstop>
-  <tabstop>sendToRouterPushButton</tabstop>
-  <tabstop>downloadRouterOSPushButton</tabstop>
+  <tabstop>send_to_router_push_button</tabstop>
+  <tabstop>download_routeros_push_button</tabstop>
   <tabstop>updateRouterOSPushButton</tabstop>
   <tabstop>configureRouterPushButton</tabstop>
   <tabstop>wirelessScanPushButton</tabstop>
