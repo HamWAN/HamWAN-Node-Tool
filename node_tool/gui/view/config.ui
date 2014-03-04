@@ -354,41 +354,6 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="verifyConnectionTab">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <attribute name="title">
-        <string>Verify Connection</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_5">
-        <item row="5" column="0" colspan="2">
-         <widget class="QTextBrowser" name="wirelessMonitorTextBrowser"/>
-        </item>
-        <item row="0" column="0" colspan="2">
-         <widget class="QPushButton" name="wirelessScanPushButton">
-          <property name="text">
-           <string>Wireless Scan</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0" colspan="2">
-         <widget class="QPushButton" name="wirelessMonitorPushButton">
-          <property name="text">
-           <string>Wireless Monitor</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QTextBrowser" name="wirelessScanTextBrowser"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="helpTab">
-       <attribute name="title">
-        <string>Help</string>
-       </attribute>
-      </widget>
      </widget>
     </item>
    </layout>
@@ -418,11 +383,7 @@
   <tabstop>download_routeros_push_button</tabstop>
   <tabstop>updateRouterOSPushButton</tabstop>
   <tabstop>configureRouterPushButton</tabstop>
-  <tabstop>wirelessScanPushButton</tabstop>
-  <tabstop>wirelessMonitorPushButton</tabstop>
   <tabstop>review_config_plain_text_edit</tabstop>
-  <tabstop>wirelessScanTextBrowser</tabstop>
-  <tabstop>wirelessMonitorTextBrowser</tabstop>
  </tabstops>
  <resources/>
  <connections/>
