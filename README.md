@@ -5,8 +5,7 @@ Dependencies
 * python
 * python-pyside
 * python-jinja2
-* pylibssh2
-* ftplib
+* paramiko
 
 Development Tools:
 * Eclipse & PyDev
@@ -23,3 +22,15 @@ Ubuntu
 	cd ~/hamwan-node-tool
 	git clone https://github.com/HamWAN/HamWAN-Node-Tool.git .
 	python hamwan_node_tool.py
+
+Windows
+-------------
+Install via exe/msi installers:
+Python 2.7.6 32 bit
+Pyside 1.2.1 win32-py2.7
+python pip
+
+Once those are installed, use pip to install the last deps:
+pip install pycrypto jinja2 paramiko
+
+Voila! Premade exe coming soon.
